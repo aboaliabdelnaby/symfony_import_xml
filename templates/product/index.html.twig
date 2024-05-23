@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}Products {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 style="margin-top: 20px;margin-bottom: 20px">Products</h1>
+                <table id="product_table" class="display">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>weight</th>
+                        <th>category</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+        <script>
+            $(document).ready(function () {
+                $('#product_table').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ path('app_product') }}",
+                        "type": "GET",
+                        "data": function (d) {
+                            d.searchTerm = d.search.value;
+                            d.sortColumn = d.columns[d.order[0].column].data;
+                            d.sortDirection = d.order[0].dir;
+                        }
+                    },
+                    "columns": [
+                        {"data": "title"},
+                        {"data": "description"},
+                        {"data": "weight"},
+                        {"data": "category"},
+                    ]
+                });
+            });
+        </script>
+    </div>
+{% endblock %}

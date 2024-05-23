@@ -1,0 +1,30 @@
+{# templates/xml/upload.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}upload XML Files {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 style="margin-top: 20px;margin-bottom: 20px">Upload XML File</h1>
+            <form enctype="multipart/form-data" action="{{ path('store_xml') }}" method="POST">
+                <label for="name">File:</label>
+                <input class="form-control" type="file" id="xml_file" name="xml_file">
+                <button  class="form-control mt-4 btn btn-primary" type="submit">Submit</button>
+            </form>
+
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
